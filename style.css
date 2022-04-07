@@ -6,6 +6,7 @@ body {
   width: 100vw;
   background-color: rgb(241, 241, 241);
   position: absolute;
+  overscroll-behavior: contain;
 }
 
 .board {
