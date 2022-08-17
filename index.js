@@ -52,13 +52,35 @@ const tileColor = {
     }
 }
 
+// const boardDefault = [
+//     [0, 0, 0, 0 ,0],
+//     [0, 0, 0, 0 ,0],
+//     [0, 0, 2, 0 ,0],
+//     [0, 0, 0, 0 ,0],
+//     [0, 0, 0, 0 ,0]
+// ];
+
 var board = [
     [0, 0, 0, 0 ,0],
     [0, 0, 0, 0 ,0],
     [0, 0, 2, 0 ,0],
     [0, 0, 0, 0 ,0],
     [0, 0, 0, 0 ,0]
-]
+];
+
+const newGame = () =>{
+    if(confirm('Load a new game...\nCurrent progress will be lost!')){
+        board = [
+            [0, 0, 0, 0 ,0],
+            [0, 0, 0, 0 ,0],
+            [0, 0, 2, 0 ,0],
+            [0, 0, 0, 0 ,0],
+            [0, 0, 0, 0 ,0]
+        ];
+        calcRem(); 
+        drawTiles();
+    }
+}
 
 var remTiles = []
 
@@ -72,6 +94,10 @@ const drawTiles = () =>{
                 tileObject[index].style[key] = val;
             }    
         }
+    }
+    //save to the local storage the values of board array;
+    if(typeof(localStorage) !== "undefined"){
+        localStorage.setItem('board', JSON.stringify(board));
     }
 }
 
@@ -106,11 +132,14 @@ const calcRem = () => {
 }
 
 const beginGame = () =>{
-    calcRem();
-    procedure();
-}
-
-const procedure = () => {
+    //load from local storage
+    if(typeof(localStorage)!== "undefined"){
+        let str = localStorage.getItem('board');
+        if(str !== null){
+            board = JSON.parse(str);
+        }
+    }
+    calcRem(); 
     drawTiles();
 }
 
